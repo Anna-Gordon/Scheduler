@@ -18,8 +18,8 @@ export default function DayList(props) {
   })
 
   return (
-    <lu>
+    <ul>
       {allDays}
-    </lu>
+    </ul>
   );
 }
