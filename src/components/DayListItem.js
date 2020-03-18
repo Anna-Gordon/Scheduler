@@ -24,7 +24,8 @@ const dayClass = classNames("day-list__item", {
 
 return (
   // data-testid="day" for <li>?
-  <li onClick={() => setDay(name)} className={dayClass}>
+  <li onClick={() => setDay(name)} 
+      className={dayClass}>
     <h2 className="text--regular">{name}</h2>
     <h3 className="text--light">{formatSpots(spots)}</h3>
   </li>

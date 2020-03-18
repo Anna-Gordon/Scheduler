@@ -1,9 +1,13 @@
 import React from 'react';
+// import axios from 'axios';
+
 import "components/DayListItem";
 import DayListItem from 'components/DayListItem';
 
 export default function DayList(props) {
   const {day, days, setDay } = props;
+
+
 
   const allDays = days.map(singleDay => {
     return (

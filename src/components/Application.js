@@ -1,28 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 import "components/Application.scss";
 import DayList from "components/DayList.js";
+import Appointment from "components/Appointment";
 
-const days = [
+
+const appointments = [
   {
     id: 1,
-    name: "Monday",
-    spots: 2,
+    time: "12pm",
   },
   {
     id: 2,
-    name: "Tuesday",
-    spots: 5,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
   },
   {
     id: 3,
-    name: "Wednesday",
-    spots: 0,
+    time: "2pm",
+    interview: {
+      student: "student name 1",
+      interviewer: {
+        id: 2,
+        name:"Tori Malcolm",
+        avatar:"https://i.imgur.com/Nmx0Qxo.png",
+      }
+    }
   },
+  {
+    id: 4,
+    time: "4pm",
+    interview: {
+      student: "student name 2",
+      interviewer: {
+        id: 5,
+        name:"Sven Jones",
+        avatar:"https://i.imgur.com/twYrpay.jpg",
+      }
+    }
+  },
+  {
+    id: 5,
+    time: "4pm",
+    interviewer: {
+      student: "Cohana Roy",
+      interviewer: {
+        id: 3,
+        name: "Mildred Nazir",
+        avatar:"https://i.imgur.com/T2WwVfS.png",
+      }
+    }
+  }
+
 ];
 
 export default function Application(props) {
-  const [day, setDay] = useState('');
+  const [days, setDays] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8001/api/days')
+      .then(res => {
+        setDays(res.data)
+      })
+  }, []);
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -36,8 +85,8 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={days}
-            day={day}
-            setDay={setDay}
+            day={days}
+            setDay={setDays}
           />
         </nav>
         <img
@@ -47,7 +96,9 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {appointments.map(appointment => {
+          return <Appointment key={appointment.id} {...appointment}/>
+        })}
       </section>
     </main>
   );
