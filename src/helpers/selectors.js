@@ -2,8 +2,7 @@
 export function getAppointmentsForDay(state, day) {
 
   const appointmentsForGivenDay = [];
-  // let appointments;
-  
+
   if (state.days.length > 0) {
     state.days.forEach(days => {
       if (days.name === day) {
@@ -15,8 +14,8 @@ export function getAppointmentsForDay(state, day) {
             appointmentsForGivenDay.push(state.appointments[elem])   
           }
         })
-        }     
-      });
-    }
+      }     
+    });
+  }
     return appointmentsForGivenDay;
 }
