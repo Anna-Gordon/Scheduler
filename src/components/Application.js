@@ -28,7 +28,7 @@ export default function Application() {
       Promise.resolve(appointmentsData),
       Promise.resolve(interviewsData)])
       .then((all) => {
-        console.log(all[2].data)
+        // console.log(all[2].data)
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
       })
   }, []);
@@ -74,25 +74,11 @@ export default function Application() {
         {/* {getAppointmentsForDay(state, state.day).map(appointment => {
           return <Appointment key={appointment.id} {...appointment}/>
         })} */<Appointment />}
-        <Appointment />
+        <Appointment> { schedule } </Appointment>
       </section>
     </main>
   );
 }
 
-// const appointments = getAppointmentsForDay(state, day);
-
-// const schedule = appointments.map((appointment) => {
-//   const interview = getInterview(state, appointment.interview);
-
-//   return (
-//     <Appointment
-//       key={appointment.id}
-//       id={appointment.id}
-//       time={appointment.time}
-//       interview={interview}
-//     />
-//   );
-// });
 
 

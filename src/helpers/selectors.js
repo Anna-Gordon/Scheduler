@@ -17,15 +17,34 @@ export function getAppointmentsForDay(state, day) {
       }     
     });
   }
-    return appointmentsForGivenDay;
+  return appointmentsForGivenDay;
 }
 
 export function getInterview(state, interview) {
-  console.log("STATE", state.appointments["3"], "INTERVIEW", interview)
-  if (!interview) {
-    return null;
-  } else {
+  // console.log("INTERVIEW", interview)
+
+
+    if (interview !== null){
+      interview.interviewer = state.interviewers[interview.interviewer];
+      console.log(interview)
+    } else {
+      return null;
+    }
     return interview;
   }
 
-}
+    // for (let key in state.appointments) {
+    //   if (state.appointments[key].interview) {
+    //     resultObj = state.appointments[key].interview;
+
+    //       if (resultObj.interviewer !== null) {
+    //         resultObj.interviewer = state.interviewers[resultObj.interviewer];
+
+    //       } 
+    //       // console.log(resultObj)
+          
+    //       // } 
+    //       // console.log(state.appointments[key].interview.interviewer = state.interviewers[key])
+    //     }
+        
+    //   }

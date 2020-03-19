@@ -13,6 +13,7 @@ const state = {
       appointments: [4, 5]
     }
   ],
+
   appointments: {
     "1": { id: 1, time: "12pm", interview: null },
     "2": { id: 2, time: "1pm", interview: null },
@@ -27,19 +28,19 @@ const state = {
       time: "4pm",
       interview: { student: "Chad Takahashi", interviewer: 2 }
     }
-  }
-};
-
-const interviewers = {
-  "1": {  
-    "id": 1,
-    "name": "Sylvia Palmer",
-    "avatar": "https://i.imgur.com/LpaY82x.png"
   },
-  "2": {
-    id: 2,
-    name: "Tori Malcolm",
-    avatar: "https://i.imgur.com/Nmx0Qxo.png"
+
+  interviewers: {
+    "1": {  
+      "id": 1,
+      "name": "Sylvia Palmer",
+      "avatar": "https://i.imgur.com/LpaY82x.png"
+    },
+    "2": {
+      id: 2,
+      name: "Tori Malcolm",
+      avatar: "https://i.imgur.com/Nmx0Qxo.png"
+    }
   }
 }
 
