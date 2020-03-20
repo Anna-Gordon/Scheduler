@@ -28,15 +28,13 @@ export default function Application() {
       Promise.resolve(appointmentsData),
       Promise.resolve(interviewsData)])
       .then((all) => {
-        console.log(all[1].data)
-        // var now = new Date().getTime();   
-        // while(new Date().getTime() < now + 3000){ /* do nothing */ }
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
       })
   }, []);
 
+  //----------bookInterview-------
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -46,12 +44,39 @@ export default function Application() {
       [id]: appointment
     };
     setState({...state, appointments });
-    // axios.put(`/api/appointments/${id}`)
-    //   .then(res => {
-    //     console.log(res.status)
-    //   })
+
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
+      .then(res => {
+        // console.log("RESPONSE", res)
+        setState({...state, appointments })
+      })
   }
-  
+
+  //----------cancelInterview---------
+  function cancelInterview(id, interview) {
+    console.log(id, interview)
+
+    console.log("STATE", state)
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({...state, appointments});
+
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`, { interview })
+      .then(res => {
+        console.log("RESPONSE", res)
+        setState({...state, appointments})
+      })
+
+  }
+  //-------------selectors------------
   const interviewers = getInterviewersForDay(state, state.day);
  
   const appointments = getAppointmentsForDay(state, state.day);
@@ -66,6 +91,10 @@ export default function Application() {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+        messageOnSave="Saving"
+        messageOnDelete="Deleting"
+        messageOnConfirm="Are you sure you would like to delete the appointment?"
       />
     );
   });
