@@ -45,3 +45,24 @@ export function getInterview(state, interview) {
     //     }
         
     //   }
+
+    export function getInterviewersForDay(state, day) {
+
+      const interviewersForGivenDay = [];
+    
+      if (state.days.length > 0) {
+        state.days.forEach(days => {
+          if (days.name === day) {
+            const interviewers = days.interviewers;
+            const allInterviewers = Object.keys(state.interviewers);
+            interviewers.forEach(elem => {
+              elem = elem.toString();
+              if (allInterviewers.includes(elem)) {
+                interviewersForGivenDay.push(state.interviewers[elem])   
+              }
+            })
+          }     
+        });
+      }
+      return interviewersForGivenDay;
+    }
