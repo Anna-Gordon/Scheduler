@@ -21,13 +21,16 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-
+  // console.log("STATE", state, "INTERVIEW", interview)
+    const result = {...interview};
     if (interview !== null){
-      interview.interviewer = state.interviewers[interview.interviewer];
+
+      result.interviewer = state.interviewers[interview.interviewer];
+      // interview.interviewer:
     } else {
       return null;
     }
-    return interview;
+    return result;
   }
 
     // for (let key in state.appointments) {

@@ -28,16 +28,36 @@ export default function Application() {
       Promise.resolve(appointmentsData),
       Promise.resolve(interviewsData)])
       .then((all) => {
-        // console.log(all[2].data)
+        console.log(all[1].data)
+        // var now = new Date().getTime();   
+        // while(new Date().getTime() < now + 3000){ /* do nothing */ }
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
       })
   }, []);
 
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({...state, appointments });
+    // axios.put(`/api/appointments/${id}`)
+    //   .then(res => {
+    //     console.log(res.status)
+    //   })
+  }
+  
   const interviewers = getInterviewersForDay(state, state.day);
+ 
   const appointments = getAppointmentsForDay(state, state.day);
 
   const schedule = appointments.map((appointment) => {
-    const interview = getInterview(state, appointment.interview);
+    const interview = getInterview(state, appointment.interview); 
     return (
       <Appointment
         key={appointment.id}
@@ -45,6 +65,7 @@ export default function Application() {
         time={appointment.time}
         interview={interview}
         interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });
