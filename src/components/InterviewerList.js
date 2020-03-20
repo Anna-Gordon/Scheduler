@@ -6,6 +6,7 @@ import InterviewerListItem from "components/InterviewerListItem";
 
 export default function InterviewerList(props) {
   const { interviewers } = props;
+  console.log(interviewers)
 
   const allInterviewers = interviewers.map(singleInterviewer => {
     return (
@@ -31,6 +32,3 @@ export default function InterviewerList(props) {
   );
 }
 
-// interviewers:array - an array of objects containing the information of each interviewer
-// interviewer:number - the id of an interviewer
-// setInterviewer:function - a function that accepts an interviewer id

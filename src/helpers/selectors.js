@@ -21,12 +21,9 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-  // console.log("INTERVIEW", interview)
-
 
     if (interview !== null){
       interview.interviewer = state.interviewers[interview.interviewer];
-      console.log(interview)
     } else {
       return null;
     }
