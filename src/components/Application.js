@@ -15,6 +15,7 @@ export default function Application() {
     appointments: [],
     interviewers: {}
   });
+  console.log("STATE", state.appointments)
 
   const setDay = day => setState({ ...state, day });
   // const setDays = days => setState(prev => ({...prev, days }));
@@ -34,7 +35,6 @@ export default function Application() {
 
   //----------bookInterview-------
   function bookInterview(id, interview) {
-    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -47,35 +47,31 @@ export default function Application() {
 
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(res => {
-        // console.log("RESPONSE", res)
         setState({...state, appointments })
       })
   }
 
   //----------cancelInterview---------
   function cancelInterview(id, interview) {
-    console.log(id, interview)
-
-    console.log("STATE", state)
     const appointment = {
       ...state.appointments[id],
       interview: null
-    };
-    
+    };    
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-
     setState({...state, appointments});
 
     return axios.delete(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(res => {
-        console.log("RESPONSE", res)
         setState({...state, appointments})
       })
-
+      .catch(err => {
+        console.log(err.status(500).json({}))
+      })
   }
+
   //-------------selectors------------
   const interviewers = getInterviewersForDay(state, state.day);
  
@@ -95,6 +91,8 @@ export default function Application() {
         messageOnSave="Saving"
         messageOnDelete="Deleting"
         messageOnConfirm="Are you sure you would like to delete the appointment?"
+        messageSAVE_ERROR="Could not save appointment."
+        messageDELETE_ERROR="Could not delete appointment."
       />
     );
   });
@@ -102,7 +100,6 @@ export default function Application() {
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
         <img
           className="sidebar--centered"
           src="images/logo.png"
@@ -124,13 +121,11 @@ export default function Application() {
       </section>
       <section className="schedule">
         {schedule}
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
 }
 
-/* /* {getAppointmentsForDay(state, state.day).map(appointment => {
-  return <Appointment key={appointment.id} {...appointment}/>
-})} */ 
 
 
