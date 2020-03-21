@@ -34,39 +34,43 @@ export default function useApplicationData() {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
-    };
-    
+    }; 
     const appointments = {
       ...state.appointments,
       [id]: appointment
-    };
-        
-    setState({...state, appointments });
-    
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
-    .then(res => {
-      setState({...state, appointments })
-    })
-  }
+    };  
+    return (
+      axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
+        .then(res => {
+          setState({...state, appointments })
+        })
+        .catch((error) => {
+          return Promise.reject(error);
+        })
+      )
+  };
       
   //----------cancelInterview---------
-  function cancelInterview(id, interview) {
+  
+  function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
       interview: null
-    };    
+    }; 
     const appointments = {
       ...state.appointments,
       [id]: appointment
-    };
-
-    setState({...state, appointments });
-
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`, { interview })
-            .then(res => {
-              setState({...state, appointments})
-            })          
-  }
+    }; 
+    return (
+      axios.delete(`http://localhost:8001/api/appointments/${id}`)
+        .then((res) => {
+          setState({...state, appointments})
+        })
+        .catch((error) => {
+          return Promise.reject(error);
+        })
+      )
+  };
 
   return { state, setDay, bookInterview, cancelInterview }
 }

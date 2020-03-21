@@ -9,7 +9,6 @@ import useApplicationData from "hooks/useApplicationData.js";
 
 
 export default function Application(props) {
-  console.log("POPS", props)
   const {
     state,
     setDay,
