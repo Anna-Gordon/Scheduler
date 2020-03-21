@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function useApplicationData() {
@@ -10,7 +10,6 @@ export default function useApplicationData() {
   });
   
   const setDay = day => setState({ ...state, day });
-  // const setDays = days => setState(prev => ({...prev, days }));
   
   useEffect(() => {
     const daysData = axios.get(`http://localhost:8001/api/days`);
@@ -24,6 +23,11 @@ export default function useApplicationData() {
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
       })
   }, []);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8001/api/days`)
+      .then(days => setState(state => ({ ...state, days: days.data })));
+  }, [state.appointments]);
   
   //----------bookInterview-------
   function bookInterview(id, interview) {
@@ -31,21 +35,20 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
+    
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
+        
     setState({...state, appointments });
-  
+    
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
-      .then(res => {
-        setState({...state, appointments })
-      })
-      // .catch(err => {
-      //   console.log(err.status)
-      // })
+    .then(res => {
+      setState({...state, appointments })
+    })
   }
-  
+      
   //----------cancelInterview---------
   function cancelInterview(id, interview) {
     const appointment = {
@@ -56,15 +59,13 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    setState({...state, appointments});
-  
+
+    setState({...state, appointments });
+
     return axios.delete(`http://localhost:8001/api/appointments/${id}`, { interview })
-      .then(res => {
-        setState({...state, appointments})
-      })
-      // .catch(err => {
-      //   console.log(err.status)
-      // })
+            .then(res => {
+              setState({...state, appointments})
+            })          
   }
 
   return { state, setDay, bookInterview, cancelInterview }
