@@ -8,7 +8,7 @@ export default function Form(props) {
   const { interviewers, onSave, onCancel } = props;
   const [ error, setError ] = useState("");
   
-  console.log("FORM.JS", props)
+  // console.log("FORM.JS", props)
 
   const reset = () => {
     setName("");
@@ -29,7 +29,7 @@ export default function Form(props) {
       setError("Student name cannot be blank");
       return;
     }
-    console.log("VALIDATE FUNC", interviewer)
+    // console.log("VALIDATE FUNC", interviewer)
     setError("");
     onSave(name, interviewer);
   };

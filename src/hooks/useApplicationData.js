@@ -20,7 +20,7 @@ export default function useApplicationData() {
       Promise.resolve(appointmentsData),
       Promise.resolve(interviewsData)])
       .then((all) => {
-        console.log("INTERVIEWERS DATA", all[2].data)
+        // console.log("INTERVIEWERS DATA", all[2].data)
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
       })
   }, []);
@@ -42,7 +42,7 @@ export default function useApplicationData() {
     };  
     return (
       axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
-        .then(res => {
+        .then((res) => {
           setState({...state, appointments })
         })
         .catch((error) => {

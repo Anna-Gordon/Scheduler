@@ -21,7 +21,7 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   const { time, interview, interviewers } = props;
-  console.log("INDEX.JS", interview, time, interviewers);
+  // console.log("INDEX.JS", interview, time, interviewers);
   
   const { mode, transition, back } = useVisualMode(
        interview ? SHOW : EMPTY
@@ -54,7 +54,7 @@ export default function Appointment(props) {
   }
 
   return(
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)}/>} 
       {mode === SHOW && (

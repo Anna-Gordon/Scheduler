@@ -7,7 +7,7 @@ import InterviewerListItem from "components/InterviewerListItem";
 
 export default function InterviewerList(props) {
   const { interviewers, value, onChange } = props;
-  console.log("InterviewerList.js", interviewers)
+  // console.log("InterviewerList.js", interviewers)
 
   const allInterviewers = interviewers.map(singleInterviewer => {
     return (
