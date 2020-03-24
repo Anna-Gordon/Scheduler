@@ -44,12 +44,31 @@ describe("Application", () => {
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
-    
     const days = getAllByTestId(container, "day");
     const day = days.find(elem => queryByText(elem, "Monday"));
+
     console.log("CONTAINER", prettyDOM(day))
-    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+    setTimeout(async () => {
+      await waitForElement(() => getByText(day, "no spots remaining"));
+      expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+    }, 1000);
   });
+
+  // it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
+  //   // 1. Render the Application.
+  //   const { container } = render(<Application />);
+  
+  //   // 2. Wait until the text "Archie Cohen" is displayed.
+  //   await waitForElement(() => getByText(container, "Archie Cohen"));
+  
+  //   // 3. Click the "Add" button on the first empty appointment.
+  //   // 4. Enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter Student Name".
+  //   // 5. Click the first interviewer in the list.
+  //   // 6. Click the "Save" button on that same appointment.
+  //   // 7. Check that the element with the text "Saving" is displayed.
+  //   // 8. Wait until the element with the text "Lydia Miller-Jones" is displayed.
+  //   // 9. Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
+  // });
 
 })
 
