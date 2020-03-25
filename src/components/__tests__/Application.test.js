@@ -22,14 +22,14 @@ describe("Application", () => {
   // })
 
   //---------ES2017------------
-  xit("defaults to Monday and changes the schedule when a new day is selected", async () => {
+  it("defaults to Monday and changes the schedule when a new day is selected", async () => {
     const { getByText } = render(<Application />)
     await waitForElement(() => getByText("Monday"));
         fireEvent.click(getByText("Tuesday"));
         expect(getByText("Leopold Silvers")).toBeInTheDocument();     
   })
 
-  xit("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+  it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"))
     const appointments = getAllByTestId(container, 'appointment');
@@ -56,7 +56,7 @@ describe("Application", () => {
     debug();
   });
   
-  xit("loads data, cancels an interview and increases the spots remaining for Monday by 1" , async () => {
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1" , async () => {
     // 1. Render the Application.
     const { container, debug } = render(<Application />);
     
@@ -88,7 +88,6 @@ describe("Application", () => {
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
 
     fireEvent.click(getByAltText(appointment, "Edit"));
-    // await waitForElement(() => getByText(appointment, "Archie Cohen"));
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: {value: "James Cohen"}
     });
@@ -101,15 +100,57 @@ describe("Application", () => {
     expect(queryByText(appointment, "James Cohen")).toBeInTheDocument();
 
     debug();
-  })
-  
-  xit("shows the save error when failing to save an appointment", () => {
+  });
+
+  //------error handling------
+  it("shows the save error when failing to save an appointment", async () => {
     axios.put.mockRejectedValueOnce();
+    const { container, debug } = render(<Application />);
+    await waitForElement(() => getByText(container, "Archie Cohen"))
+    const appointments = getAllByTestId(container, 'appointment');
+    const appointment = appointments[0];
+
+    fireEvent.click(getByAltText(appointment, "Add"));
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+    
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+    fireEvent.click(getByText(appointment, "Save"));
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+
+    await waitForElement(() => getByText(appointment, "Could not save appointment."));
+    // expect(getByText(appointment, "Could not save appointment.")).toBeInTheDocument();
+    fireEvent.click(getByAltText(appointment, "Close"));
+    expect(getByAltText(appointment, "Add"));
+    
+    debug();
+  });
+  
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    axios.delete.mockRejectedValueOnce();
+    const { container, debug } = render(<Application />);
+
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
+
+    fireEvent.click(getByAltText(appointment, "Delete"));
+    expect(getByText(appointment, "Are you sure you would like to delete the appointment?")).toBeInTheDocument();
+
+    fireEvent.click(getByText(appointment, "Confirm"));
+    expect(getByText(appointment, "Deleting")).toBeInTheDocument();
+   
+    await waitForElement(() => getByText(appointment, "Could not delete appointment."));
+    fireEvent.click(getByAltText(appointment, "Close"));
+
+    expect(queryByText(appointment, "Archie Cohen")).toBeInTheDocument();
+    
+    debug();
   });
   
   
+  // console.log("CONTAINER", prettyDOM(appointment))
 })
 
-// console.log("CONTAINER", prettyDOM(appointment))
       // console.log(debug(day))
       // expect(getByText("Monday")).toBeInTheDocument();
