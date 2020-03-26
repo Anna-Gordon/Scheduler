@@ -21,11 +21,10 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   const { time, interview, interviewers } = props;
-  // console.log("INDEX.JS", interview, time, interviewers);
   
   const { mode, transition, back } = useVisualMode(
        interview ? SHOW : EMPTY
-    );
+  );
   //-------save---------
   function save(name, interviewer) {
     const interview = {
@@ -41,7 +40,7 @@ export default function Appointment(props) {
         transition(ERROR_SAVE, true);
       })
   }
-  //-------cancel-------------
+  //-------cancel--------
   function cancel() {
     transition(DELETING, true)
     props.cancelInterview(props.id)

@@ -93,4 +93,3 @@ export default {
     });
   })
 }
-// put - url`http://localhost:8001/api/appointments/${id}`

@@ -29,7 +29,7 @@ export function getInterview(state, interview) {
     }
     return result;
   }
-//-------- second version --------
+//-------- second version for getInterview()--------
   // function getInterview(state, interview) {
   //   if (interview != null) {
   //     return {...interview, interviewer: {...state.interviewers[interview.interviewer]}};

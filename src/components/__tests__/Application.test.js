@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { render, cleanup , getByText, prettyDOM, queryByText, getAllByAltText} from "@testing-library/react";
+import { render, cleanup , getByText, queryByText } from "@testing-library/react";
 import { waitForElement } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
 import { getAllByTestId, getByAltText, getByPlaceholderText } from "@testing-library/react";
@@ -12,16 +12,6 @@ afterEach(cleanup);
 
 describe("Application", () => {
 
-  // it("defaults to Monday and changes the schedule when a new day is selected", () => {
-  //   const { getByText } = render(<Application />)
-  //   return waitForElement(() => getByText("Monday"))
-  //     .then(() => {
-  //       fireEvent.click(getByText("Tuesday"));
-  //       expect(getByText("Leopold Silvers")).toBeInTheDocument();
-  //     })      
-  // })
-
-  //---------ES2017------------
   it("defaults to Monday and changes the schedule when a new day is selected", async () => {
     const { getByText } = render(<Application />)
     await waitForElement(() => getByText("Monday"));
@@ -53,14 +43,12 @@ describe("Application", () => {
       expect(getByText(day, "no spots remaining")).toBeInTheDocument();
     }, 1000);
 
-    debug();
+    // debug();
   });
   
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1" , async () => {
-    // 1. Render the Application.
-    const { container, debug } = render(<Application />);
-    
-    // 2. Wait until the text "Archie Cohen" is displayed.
+
+    const { container, debug } = render(<Application />);  
     await waitForElement(() => getByText(container, "Archie Cohen"));
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
 
@@ -79,7 +67,7 @@ describe("Application", () => {
       expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
     }, 1000);  
     
-    debug();
+    // debug();
   });
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
@@ -99,7 +87,7 @@ describe("Application", () => {
     await waitForElement(() => getByText(appointment, "James Cohen"));
     expect(queryByText(appointment, "James Cohen")).toBeInTheDocument();
 
-    debug();
+    // debug();
   });
 
   //------error handling------
@@ -120,11 +108,11 @@ describe("Application", () => {
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, "Could not save appointment."));
-    // expect(getByText(appointment, "Could not save appointment.")).toBeInTheDocument();
+
     fireEvent.click(getByAltText(appointment, "Close"));
     expect(getByAltText(appointment, "Add"));
     
-    debug();
+    // debug();
   });
   
   it("shows the delete error when failing to delete an existing appointment", async () => {
@@ -145,12 +133,7 @@ describe("Application", () => {
 
     expect(queryByText(appointment, "Archie Cohen")).toBeInTheDocument();
     
-    debug();
+    // debug();
   });
   
-  
-  // console.log("CONTAINER", prettyDOM(appointment))
 })
-
-      // console.log(debug(day))
-      // expect(getByText("Monday")).toBeInTheDocument();
