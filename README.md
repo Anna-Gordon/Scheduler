@@ -3,9 +3,12 @@
   
   UI components developed using Storybook. High test coverage includes Unit, Integration and E2E tests.
 
-![Screenshot of booking interview form] (https://github.com/Anna-Gordon/Scheduler/blob/master/docs/bookInterviewForm.png?raw=true)
-![Screenshot of confirmation onDelete] (https://github.com/Anna-Gordon/Scheduler/blob/master/docs/confirmOnDelete.png?raw=true)
-![Screenshot of error message] (https://github.com/Anna-Gordon/Scheduler/blob/master/docs/error.png?raw=true)
+## Final Product
+
+!["Booking interview form"](https://github.com/Anna-Gordon/Scheduler/blob/master/docs/bookInterviewForm.png?raw=true)
+!["Confirmation onDelete"](https://github.com/Anna-Gordon/Scheduler/blob/master/docs/confirmOnDelete.png?raw=true)
+!["Error message"](https://github.com/Anna-Gordon/Scheduler/blob/master/docs/error.png?raw=true)
+
 ## Setup
 
 1. Install dependencies using the `npm install` command
